@@ -1,5 +1,5 @@
 functions:
-  resolver:
+  changeState:
     type: resolver
     handler:
       code: src/resolvers/resolver/handler.ts

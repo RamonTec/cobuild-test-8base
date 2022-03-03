@@ -28,43 +28,43 @@
  *    8base generate mock resolver -m [MOCK_FILE_NAME]
  */
 
- import gql from 'graphql-tag';
- const STATEUPDATE = gql`
-   mutation changeState($data: TaskUpdateInput!, $filter: TaskKeyFilter) {
-     taskUpdate(data: $data, filter: $filter) {
-       state
-     }
-   }
- `; 
- import { FunctionContext, FunctionEvent, FunctionResult } from '8base-cli-types';
- 
- type ResolverResult = FunctionResult<{
-   result: string,
- }>;
- 
- export default async (
-   event: FunctionEvent<{ id:"" }>,
-   ctx: FunctionContext,
- ): ResolverResult => {
-   let response = null;
-   try{
-     response = await ctx.api.gqlRequest(STATEUPDATE, {
-       data: {
-         state: true
-       },
-       filter: {
-         id: event.data.id,
-       }
-     })
-     return {
-       data: {
-         result: response,
-       }
-     };
-   }
-   catch(e){
-     console.log(e)
-     throw new Error(e);
-     
-   }
- };
+import gql from 'graphql-tag';
+const STATEUPDATE = gql`
+  mutation changeState($data: TaskUpdateInput!, $filter: TaskKeyFilter) {
+    taskUpdate(data: $data, filter: $filter) {
+      status
+    }
+  }
+`; 
+import { FunctionContext, FunctionEvent, FunctionResult } from '8base-cli-types';
+
+type ResolverResult = FunctionResult<{
+  result: string,
+}>;
+
+export default async (
+  event: FunctionEvent<{ id:"", status: Boolean }>,
+  ctx: FunctionContext,
+): ResolverResult => {
+  let response = null;
+  try{
+    response = await ctx.api.gqlRequest(STATEUPDATE, {
+      data: {
+        status: event.data.status
+      },
+      filter: {
+        id: event.data.id,
+      }
+    })
+    return {
+      data: {
+        result: response,
+      }
+    };
+  }
+  catch(e){
+    console.log(e)
+    throw new Error(e);
+    
+  }
+};

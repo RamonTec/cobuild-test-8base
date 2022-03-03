@@ -6,10 +6,11 @@
 # https://docs.8base.com/8base-console/custom-functions/resolvers
 #
 
+
 type ResolverResult {
   success: Boolean
 }
 
 extend type Mutation {
-  changeState(id: ID): ResolverResult
+  changeState(id: ID, status: Boolean): ResolverResult
 }
